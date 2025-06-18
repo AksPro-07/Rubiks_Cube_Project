@@ -1,13 +1,146 @@
 //
-// Created by akshi on 17-06-2025.
+// Created by akshi on 17-06-2025.             1
 //
+
+/*
+    Task 1: Generic Rubik’s Cube:
+    Write an abstract class of a Generic Rubik’s Cube that has the following operations as virtual functions:
+    1. All the 18 different rotations of the cube: F, Fprime, F2, U, Uprime, etc.
+    2. Print function: A function that takes the Rubik’s Cube and prints it in the Planar Representation Format.
+    3. Random Shuffle: A function that returns a randomly shuffled Rubik’s Cube which is solvable.
+    4. isSolved(): a boolean function that tells whether the current configuration of the Rubik’s Cube is solved or not.
+*/
 
 #ifndef GENERIC_RUBIKS_CUBE_H
 #define GENERIC_RUBIKS_CUBE_H
 
+// It's the file to start with, because we first declare the main base class.
 
+#include <bits/stdc++.h>            // A bit different from the code but for now, I am going with it.
+using namespace std;
 
 class Generic_Rubiks_Cube {
+public:
+
+    // Define a Rubik's Cube i.e., What make it that ?
+    // enum is used to declare a option set, kind of like a datatype, means it can only return any of the value that is present in it.
+
+    enum class FACE {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
+        FRONT,
+        BACK
+    };
+
+    enum class COLOR {
+        WHITE,
+        YELLOW,
+        GREEN,
+        BLUE,
+        RED,
+        ORANGE
+    };
+
+    // Define the operation i.e., Now that you have defined the basic characteristic of that entity, What can you do with it ?
+
+    enum class MOVE {
+        F, FPRIME, F2,
+        B, BPRIME, B2,
+        L, LPRIME, L2,
+        R, RPRIME, R2,
+        U, UPRIME, U2,
+        D, DPRIME, D2
+    };
+
+    // Now, if you are going to print it, you will need to know the color at each cell i.e., of those 6x3x3 ( Face x Row x Column )
+    // const as it is a getter, it a good practice, since getter doesn't change anything of that class object, using const make it clear to the compiler.
+
+    virtual COLOR getColor(FACE face, unsigned row, unsigned column) const = 0;
+
+    // When you print, you are not going to print the entire color just the letter of it.
+    // static means that the function belongs to the class, not to any particular object (instance) of that class.
+    /*
+        It doesn't rely on any particular cube object.
+        Functions like this are just "helpers" or "converters".
+        Making them static makes it clear they don’t depend on the object’s state.
+     */
+    //You make getColorLetter static because it just converts a COLOR to a char, and doesn't need any object-specific data. It makes your code cleaner, and avoids unnecessary object creation.
+
+    static char getColorLetter(COLOR color);
+
+    // Now, to check if the cube is solved.
+
+    virtual bool isSolved() const = 0;
+
+    // Now, you need to return the move when you do as well, and we will have to know all.
+
+    static string getMove(MOVE mov);
+
+    // Printing of cube.
+    // We didn't declare the print function virtual because we want to make printing done by itself and not the derived classes that was also the reason why we choose to create the helper function getColor, so that the derived classes can give the color of the Face x Row x Column that we desire and we can solely do the printing through the base class and not need to complicate our thinking to bother about the printing for each model that we will create.
+
+    void print() const;
+
+    // Now, to implement the random shuffle that Randomly shuffle the cube with 'times' moves and returns the moves performed.
+
+    vector<MOVE> randomShuffle(unsigned times);
+
+    // Now, making the moves on the cube.
+    // These are not made virtual as we want the models that we are going to make to implement how they are doing a certain move but not to make the move themselves as it will be done by the solvers and solver don't bother about how they are making a move, they will just only be concern about what moves to make to solve the cube.
+
+    Generic_Rubiks_Cube &move(MOVE mov);
+
+    Generic_Rubiks_Cube &invert(MOVE mov);
+
+    virtual Generic_Rubiks_Cube &f() = 0;
+
+    virtual Generic_Rubiks_Cube &fPrime() = 0;
+
+    virtual Generic_Rubiks_Cube &f2() = 0;
+
+    virtual Generic_Rubiks_Cube &b() = 0;
+
+    virtual Generic_Rubiks_Cube &bPrime() = 0;
+
+    virtual Generic_Rubiks_Cube &b2() = 0;
+
+    virtual Generic_Rubiks_Cube &u() = 0;
+
+    virtual Generic_Rubiks_Cube &uPrime() = 0;
+
+    virtual Generic_Rubiks_Cube &u2() = 0;
+
+    virtual Generic_Rubiks_Cube &d() = 0;
+
+    virtual Generic_Rubiks_Cube &dPrime() = 0;
+
+    virtual Generic_Rubiks_Cube &d2() = 0;
+
+    virtual Generic_Rubiks_Cube &l() = 0;
+
+    virtual Generic_Rubiks_Cube &lPrime() = 0;
+
+    virtual Generic_Rubiks_Cube &l2() = 0;
+
+    virtual Generic_Rubiks_Cube &r() = 0;
+
+    virtual Generic_Rubiks_Cube &rPrime() = 0;
+
+    virtual Generic_Rubiks_Cube &r2() = 0;
+
+    /* This piece of code is not yet understood and may be it's for future purpose so, for now to till we need it, let's move along with the project.
+
+    string getCornerColorString(uint8_t ind) const;
+
+    uint8_t getCornerIndex(uint8_t ind) const;
+
+    uint8_t getCornerOrientation(uint8_t ind) const;
+
+    */
+
+virtual ~Generic_Rubiks_Cube() = default;
 
 };
 
