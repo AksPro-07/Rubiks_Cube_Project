@@ -2,54 +2,12 @@
 // Created by akshi on 18-06-2025.                    3
 //
 
-#include "Generic_Rubiks_Cube.h"
-
-class CubeModel_3D_Array : Generic_Rubiks_Cube {
-    private:
-
-    // To make it ease in implementing the rotating function as they all do similar things with respect to their faces ( Understanding is clear, and it's written in notebook )
-
-    void rotateFace(int face_number) {
-        char temp_face[3][3]={};
-        for (unsigned i = 0; i < 3; i++) {
-            for (unsigned j = 0; j < 3; j++) {
-                temp_face[i][j] = cube[face_number][i][j];
-            }
-        }
-        for (unsigned i = 0; i < 3; i++) cube[face_number][0][i] = temp_face[2-i][0];
-        for (unsigned i = 0; i < 3; i++) cube[face_number][i][2] = temp_face[0][i];
-        for (unsigned i = 0; i < 3; i++) cube[face_number][2][2-i] = temp_face[i][2];
-        for (unsigned i = 0; i < 3; i++) cube[face_number][2-i][0] = temp_face[2][2-i];
-    }
-
-    public:
-
-    // Starting with declaring the cube data storage and initializing its constructor.
-
-    char cube[6][3][3]{};
-
-    /*                             This is currently using as the standard
-    • Up → 0 (White)
-    • Left → 1 (Green)
-    • Front → 2 (Red)
-    • Right → 3 (Blue)
-    • Back → 4 (Orange)
-    • Down → 5 (Yellow)
-     */
-
-    CubeModel_3D_Array() {
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
-                    cube[i][j][k] = getColorLetter(static_cast<COLOR>(i));              //Modern C++ - This is safe, explicit, and checked at compile time.
-                }
-            }
-        }
-    }
+#include "CubeModel_3D_Array.h"
 
     // Now, we need to define all the virtual functions for the parent class Generic_Rubiks_Cube.
+    // And you can't use override outside the class implementation and I don't know whether it does its job on the declaration side, so I have not written it in it.
 
-    [[nodiscard]] COLOR getColor(FACE face, unsigned row, unsigned column) const override {
+    [[nodiscard]] CubeModel_3D_Array::COLOR CubeModel_3D_Array::getColor(FACE face, unsigned row, unsigned column) const {
         char color = cube[static_cast<int>(face)][row][column];
         switch (color) {
             case 'R' : return COLOR::RED;
@@ -62,7 +20,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         throw std::runtime_error("Invalid color character in cube.");
     }
 
-    [[nodiscard]] bool isSolved() const override {
+    [[nodiscard]] bool CubeModel_3D_Array::isSolved() const {
          for (int i = 0; i < 6; i++) {
              for (int j = 0; j < 3; j++) {
                  for (int k = 0; k < 3; k++) {
@@ -74,7 +32,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return true;
     }
 
-        Generic_Rubiks_Cube &u() override {
+        Generic_Rubiks_Cube & CubeModel_3D_Array::u() {
         this->rotateFace(0);
 
         char temp_arr[3] = {};
@@ -87,7 +45,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &uPrime() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::uPrime() {
         this->u();
         this->u();
         this->u();
@@ -95,14 +53,14 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &u2() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::u2() {
         this->u();
         this->u();
 
         return *this;
     }
 
-    Generic_Rubiks_Cube &l() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::l() {
         this->rotateFace(1);
 
         char temp_arr[3] = {};
@@ -115,7 +73,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &lPrime() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::lPrime() {
         this->l();
         this->l();
         this->l();
@@ -123,14 +81,14 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &l2() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::l2() {
         this->l();
         this->l();
 
         return *this;
     }
 
-    Generic_Rubiks_Cube &f() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::f() {
         this->rotateFace(2);
 
         char temp_arr[3] = {};
@@ -143,7 +101,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &fPrime() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::fPrime() {
         this->f();
         this->f();
         this->f();
@@ -151,14 +109,14 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &f2() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::f2() {
         this->f();
         this->f();
 
         return *this;
     }
 
-    Generic_Rubiks_Cube &r() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::r() {
         this->rotateFace(3);
 
         char temp_arr[3] = {};
@@ -171,7 +129,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &rPrime() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::rPrime() {
         this->r();
         this->r();
         this->r();
@@ -179,14 +137,14 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &r2() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::r2() {
         this->r();
         this->r();
 
         return *this;
     }
 
-    Generic_Rubiks_Cube &b() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::b() {
         this->rotateFace(4);
 
         char temp_arr[3] = {};
@@ -199,7 +157,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &bPrime() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::bPrime() {
         this->b();
         this->b();
         this->b();
@@ -207,14 +165,14 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &b2() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::b2() {
         this->b();
         this->b();
 
         return *this;
     }
 
-    Generic_Rubiks_Cube &d() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::d() {
         this->rotateFace(5);
 
         char temp_arr[3] = {};
@@ -227,7 +185,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &dPrime() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::dPrime() {
         this->d();
         this->d();
         this->d();
@@ -235,7 +193,7 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
         return *this;
     }
 
-    Generic_Rubiks_Cube &d2() override {
+    Generic_Rubiks_Cube & CubeModel_3D_Array::d2() {
         this->d();
         this->d();
 
@@ -244,6 +202,3 @@ class CubeModel_3D_Array : Generic_Rubiks_Cube {
 
     // Pending ...
 
-};
-
-// Pending ...

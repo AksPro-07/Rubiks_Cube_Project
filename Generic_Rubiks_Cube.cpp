@@ -100,7 +100,7 @@ void Generic_Rubiks_Cube::print() const{
     cout << "Generic Rubik's Cube:\n\n";
 
     for (unsigned row = 0; row < 3; row++) {
-        for (unsigned i = 0; i < 7; i++) cout<<" ";
+        for (unsigned i = 0; i < 8; i++) cout<<" ";
         for (unsigned col = 0; col < 3; col++) {
             cout<<getColorLetter(getColor(FACE::UP, row, col))<<' ';
         }
@@ -137,7 +137,7 @@ void Generic_Rubiks_Cube::print() const{
     cout<<"\n";
 
     for (unsigned row = 0; row < 3; row++) {
-        for (unsigned i = 0; i < 7; i++) cout<<" ";
+        for (unsigned i = 0; i < 8; i++) cout<<" ";
         for (unsigned col = 0; col < 3; col++) {
             cout<<getColorLetter(getColor(FACE::DOWN, row, col))<<' ';
         }
