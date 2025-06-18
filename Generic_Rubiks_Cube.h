@@ -1,5 +1,5 @@
 //
-// Created by akshi on 17-06-2025.             1
+// Created by akshi on 17-06-2025.                      1
 //
 
 /*
@@ -23,7 +23,7 @@ class Generic_Rubiks_Cube {
 public:
 
     // Define a Rubik's Cube i.e., What make it that ?
-    // enum is used to declare a option set, kind of like a datatype, means it can only return any of the value that is present in it.
+    // enum is used to declare an option set, kind of like a datatype, means it can only return any of the value that is present in it.
 
     enum class FACE {
         UP,
@@ -36,11 +36,11 @@ public:
 
     enum class COLOR {
         WHITE,
-        YELLOW,
         GREEN,
-        BLUE,
         RED,
-        ORANGE
+        BLUE,
+        ORANGE,
+        YELLOW
     };
 
     // Define the operation i.e., Now that you have defined the basic characteristic of that entity, What can you do with it ?
@@ -56,8 +56,25 @@ public:
 
     // Now, if you are going to print it, you will need to know the color at each cell i.e., of those 6x3x3 ( Face x Row x Column )
     // const as it is a getter, it a good practice, since getter doesn't change anything of that class object, using const make it clear to the compiler.
+    /*
+     What does [[nodiscard]] mean?
+     It tells the compiler:
+     "If someone calls this function and ignores its return value, warn them."
+    This is helpful when the return value matters, like in:
+     Getters (like getColor(...))
+     Functions returning error codes or states
+     Anything where ignoring the result is likely a bug
 
-    virtual COLOR getColor(FACE face, unsigned row, unsigned column) const = 0;
+    Use [[nodiscard]] when:
+     The return value is meaningful and should not be ignored
+     Especially on getter functions
+     You want to catch careless mistakes early
+
+     If you're using C++17 or later, [[nodiscard]] is fully supported.
+     For C++11/14, this attribute may not compile unless your compiler adds it as an extension.
+     */
+
+    [[nodiscard]] virtual COLOR getColor(FACE face, unsigned row, unsigned column) const = 0;
 
     // When you print, you are not going to print the entire color just the letter of it.
     // static means that the function belongs to the class, not to any particular object (instance) of that class.
@@ -66,13 +83,19 @@ public:
         Functions like this are just "helpers" or "converters".
         Making them static makes it clear they don’t depend on the object’s state.
      */
+    /*
+    You cannot write static string getMove(MOVE ind) const = 0; because:
+    static functions don’t belong to an object, so they can’t be const or virtual.
+    You use static when the function is a utility that doesn't depend on instance data.
+    Use virtual ... const = 0 only for functions that vary by object and need to be overridden.
+     */
     //You make getColorLetter static because it just converts a COLOR to a char, and doesn't need any object-specific data. It makes your code cleaner, and avoids unnecessary object creation.
 
     static char getColorLetter(COLOR color);
 
     // Now, to check if the cube is solved.
 
-    virtual bool isSolved() const = 0;
+    [[nodiscard]] virtual bool isSolved() const = 0;
 
     // Now, you need to return the move when you do as well, and we will have to know all.
 

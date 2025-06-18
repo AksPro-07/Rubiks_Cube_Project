@@ -4,7 +4,7 @@
 
 #include "Generic_Rubiks_Cube.h"
 
-// It's where we implement all the member functions of the base class that are not going to get derived from the derived classes as they aren't vietual.
+// It's where we implement all the member functions of the base class that are not going to get derived from the derived classes as they aren't virtual.
 
 char Generic_Rubiks_Cube::getColorLetter(COLOR color) {
     switch (color) {
@@ -65,6 +65,7 @@ Generic_Rubiks_Cube& Generic_Rubiks_Cube::move(MOVE mov) {
         case MOVE::BPRIME : return this->bPrime();
         case MOVE::B2 : return this->b2();
     }
+    throw std::runtime_error("Invalid move in cube.");
 }
 
 
@@ -89,6 +90,77 @@ Generic_Rubiks_Cube& Generic_Rubiks_Cube::invert(MOVE mov) {
         case MOVE::BPRIME : return this->b();
         case MOVE::B2 : return this->b2();
     }
+    throw std::runtime_error("Invalid invert move in cube.");
 }
 
+// I am printing it in the planar representation format.
 
+void Generic_Rubiks_Cube::print() const{
+
+    cout << "Generic Rubik's Cube:\n\n";
+
+    for (unsigned row = 0; row < 3; row++) {
+        for (unsigned i = 0; i < 7; i++) cout<<" ";
+        for (unsigned col = 0; col < 3; col++) {
+            cout<<getColorLetter(getColor(FACE::UP, row, col))<<' ';
+        }
+        cout<<"\n";
+    }
+
+    cout<<"\n";
+
+    for (unsigned row = 0; row < 3; row++) {
+
+        for (unsigned col = 0; col < 3; col++) {
+            cout<<getColorLetter(getColor(FACE::LEFT, row, col))<<' ';
+        }
+        cout<<"  ";
+
+        for (unsigned col = 0; col < 3; col++) {
+            cout<<getColorLetter(getColor(FACE::FRONT, row, col))<<' ';
+        }
+        cout<<"  ";
+
+        for (unsigned col = 0; col < 3; col++) {
+            cout<<getColorLetter(getColor(FACE::RIGHT, row, col))<<' ';
+        }
+        cout<<"  ";
+
+        for (unsigned col = 0; col < 3; col++) {
+            cout<<getColorLetter(getColor(FACE::BACK, row, col))<<' ';
+        }
+
+        cout<<"\n";
+
+    }
+
+    cout<<"\n";
+
+    for (unsigned row = 0; row < 3; row++) {
+        for (unsigned i = 0; i < 7; i++) cout<<" ";
+        for (unsigned col = 0; col < 3; col++) {
+            cout<<getColorLetter(getColor(FACE::DOWN, row, col))<<' ';
+        }
+        cout<<"\n";
+    }
+
+    cout<<"\n";
+}
+
+// Each enum value corresponds internally to an int:     MOVE::U = 0   MOVE::Ui =  …   MOVE::B2 = 17
+// static_cast<MOVE>(select_move) - This is saying:  "Take this int value (select_move), and cast it into the MOVE enum."
+//  select_move = 5;
+//  static_cast<MOVE>(select_move);  // → MOVE::D2
+
+vector<Generic_Rubiks_Cube::MOVE> Generic_Rubiks_Cube::randomShuffle(unsigned times) {
+    vector<MOVE> moves_performed;
+    srand(time(nullptr));                                   // Modern C++ (clear intent)
+    for (unsigned i = 0; i < times; i++) {
+        unsigned select_move = rand() % 18;
+        moves_performed.push_back(static_cast<MOVE>(select_move));
+        this->move(static_cast<MOVE>(select_move));
+    }
+    return moves_performed;
+}
+
+// Pending ...
