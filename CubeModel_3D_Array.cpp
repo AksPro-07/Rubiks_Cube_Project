@@ -1,23 +1,22 @@
 //
-// Created by akshi on 18-06-2025.                    3
+// Created by akshi on 18-06-2025.                          4 - Completed
 //
 
 #include "CubeModel_3D_Array.h"
 
     // Now, we need to define all the virtual functions for the parent class Generic_Rubiks_Cube.
-    // And you can't use override outside the class implementation and I don't know whether it does its job on the declaration side, so I have not written it in it.
+    // And you can't use override outside the class implementation, so I have written it on the declaration side.
 
     [[nodiscard]] CubeModel_3D_Array::COLOR CubeModel_3D_Array::getColor(FACE face, unsigned row, unsigned column) const {
-        char color = cube[static_cast<int>(face)][row][column];
-        switch (color) {
+        switch (cube[static_cast<int>(face)][row][column]) {            // A bit of change just to get rid of warnings and nothing.
             case 'R' : return COLOR::RED;
             case 'G' : return COLOR::GREEN;
             case 'B' : return COLOR::BLUE;
             case 'Y' : return COLOR::YELLOW;
             case 'W' : return COLOR::WHITE;
             case 'O' : return COLOR::ORANGE;
+            default: throw std::runtime_error("Invalid color character in cube.");
         }
-        throw std::runtime_error("Invalid color character in cube.");
     }
 
     [[nodiscard]] bool CubeModel_3D_Array::isSolved() const {
@@ -200,5 +199,26 @@
         return *this;
     }
 
-    // Pending ...
+    bool CubeModel_3D_Array::operator==(const CubeModel_3D_Array &r1) const {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    if (r1.cube[i][j][k] != cube[i][j][k]) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    CubeModel_3D_Array &CubeModel_3D_Array::operator=(const CubeModel_3D_Array &r1) {
+        if (this ==&r1) return *this;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    cube[i][j][k] = r1.cube[i][j][k];
+                }
+            }
+        }
+        return *this;
+    }
 

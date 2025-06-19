@@ -1,5 +1,5 @@
 //
-// Created by akshi on 17-06-2025.                      1
+// Created by akshi on 17-06-2025.                          1
 //
 
 /*
@@ -48,8 +48,8 @@ public:
     enum class MOVE {
         F, FPRIME, F2,
         B, BPRIME, B2,
-        L, LPRIME, L2,
         R, RPRIME, R2,
+        L, LPRIME, L2,
         U, UPRIME, U2,
         D, DPRIME, D2
     };
@@ -102,7 +102,7 @@ public:
     static string getMove(MOVE mov);
 
     // Printing of cube.
-    // We didn't declare the print function virtual because we want to make printing done by itself and not the derived classes that was also the reason why we choose to create the helper function getColor, so that the derived classes can give the color of the Face x Row x Column that we desire and we can solely do the printing through the base class and not need to complicate our thinking to bother about the printing for each model that we will create.
+    // We didn't declare the print function virtual because we want to make printing done by itself and not the derived classes that was also the reason why we choose to create the helper function getColor, so that the derived classes can give the color of the Face x Row x Column that we desire, and we can solely do the printing through the base class and not need to complicate our thinking to bother about the printing for each model that we will create.
 
     void print() const;
 

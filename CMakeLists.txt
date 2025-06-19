@@ -9,4 +9,7 @@ add_executable(Rubiks_Cube_Project main.cpp
         CubeModel_3D_Array.cpp
         CubeModel_1D_Array.cpp
         CubeModel_3D_Array.cpp
-        CubeModel_3D_Array.h)
+        CubeModel_3D_Array.h
+        DFS_Solver.h
+        BFS_Solver.h
+        IDDFS_Solver.h)

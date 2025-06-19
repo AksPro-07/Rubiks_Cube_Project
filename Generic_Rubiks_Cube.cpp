@@ -1,5 +1,5 @@
 //
-// Created by akshi on 17-06-2025.                  2
+// Created by akshi on 17-06-2025.                          2
 //
 
 #include "Generic_Rubiks_Cube.h"
@@ -58,9 +58,9 @@ Generic_Rubiks_Cube& Generic_Rubiks_Cube::move(MOVE mov) {
         case MOVE::D : return this->d();
         case MOVE::DPRIME : return this->dPrime();
         case MOVE::D2 : return this->d2();
-        case MOVE::F : return this->l();
-        case MOVE::FPRIME : return this->lPrime();
-        case MOVE::F2 : return this->l2();
+        case MOVE::F : return this->f();
+        case MOVE::FPRIME : return this->fPrime();
+        case MOVE::F2 : return this->f2();
         case MOVE::B : return this->b();
         case MOVE::BPRIME : return this->bPrime();
         case MOVE::B2 : return this->b2();
@@ -83,9 +83,9 @@ Generic_Rubiks_Cube& Generic_Rubiks_Cube::invert(MOVE mov) {
         case MOVE::D : return this->dPrime();
         case MOVE::DPRIME : return this->d();
         case MOVE::D2 : return this->d2();
-        case MOVE::F : return this->lPrime();
-        case MOVE::FPRIME : return this->l();
-        case MOVE::F2 : return this->l2();
+        case MOVE::F : return this->fPrime();
+        case MOVE::FPRIME : return this->f();
+        case MOVE::F2 : return this->f2();
         case MOVE::B : return this->bPrime();
         case MOVE::BPRIME : return this->b();
         case MOVE::B2 : return this->b2();
