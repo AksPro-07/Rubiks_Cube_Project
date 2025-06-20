@@ -1,5 +1,5 @@
 //
-// Created by akshi on 19-06-2025.                          5 - Completed
+// Created by akshi on 19-06-2025.                          5 - Completed - 3
 //
 
 #include "Generic_Rubiks_Cube.h"
@@ -21,7 +21,7 @@ class DFS_Solver {
 private:
 
     T cube;
-    unordered_map<T,bool,H> visit{};
+    // unordered_map<T,bool,H> visit{};
     vector<Generic_Rubiks_Cube::MOVE> steps{};
 
     //    DFS code to find the solution (helper function)
@@ -33,16 +33,16 @@ private:
         if (depth <=0) {
             return;
         }
-        visit[cube]=true;
+        // visit[cube]=true;
 
         for (unsigned i = 0; i < 18; i++ ) {
 
             cube.move(static_cast<Generic_Rubiks_Cube::MOVE>(i));
 
-            if (visit[cube]==true) {
-                cube.invert(static_cast<Generic_Rubiks_Cube::MOVE>(i));
-                continue;
-            }
+            // if (visit[cube]==true) {
+            //     cube.invert(static_cast<Generic_Rubiks_Cube::MOVE>(i));
+            //     continue;
+            // }
 
             steps.push_back(static_cast<Generic_Rubiks_Cube::MOVE>(i));
             dfs(depth-1);

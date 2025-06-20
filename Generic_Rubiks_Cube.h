@@ -1,5 +1,5 @@
 //
-// Created by akshi on 17-06-2025.                          1
+// Created by akshi on 17-06-2025.                          1 - Completed - 10
 //
 
 /*
@@ -153,15 +153,14 @@ public:
 
     virtual Generic_Rubiks_Cube &r2() = 0;
 
-    /* This piece of code is not yet understood and may be it's for future purpose so, for now to till we need it, let's move along with the project.
+    // The next 3 functions are used for the implementation of the Corner Pattern Database, you will know about them and there work when you reach that part.
+    // I have reached it, so these functions are implemented and the first one of them is a helper function.
 
-    string getCornerColorString(uint8_t ind) const;
+    [[nodiscard]] string getCornerColorString(uint8_t index) const;
 
-    uint8_t getCornerIndex(uint8_t ind) const;
+    [[nodiscard]] uint8_t getCornerIndex(uint8_t index) const;
 
-    uint8_t getCornerOrientation(uint8_t ind) const;
-
-    */
+    [[nodiscard]] uint8_t getCornerOrientation(uint8_t index) const;
 
 virtual ~Generic_Rubiks_Cube() = default;
 

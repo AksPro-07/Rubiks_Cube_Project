@@ -1,5 +1,5 @@
 //
-// Created by akshi on 17-06-2025.                          2
+// Created by akshi on 17-06-2025.                          2 - Completed - 11
 //
 
 #include "Generic_Rubiks_Cube.h"
@@ -163,4 +163,144 @@ vector<Generic_Rubiks_Cube::MOVE> Generic_Rubiks_Cube::randomShuffle(unsigned ti
     return moves_performed;
 }
 
-// Pending ...
+
+//Helper function that returns string of corner used to determine the orientation and index of a particular piece.
+
+string Generic_Rubiks_Cube::getCornerColorString(uint8_t index) const {
+    string corner_color;
+
+    switch (index) {
+//           UFR
+        case 0:
+            corner_color += getColorLetter(getColor(FACE::UP, 2, 2));
+            corner_color += getColorLetter(getColor(FACE::FRONT, 0, 2));
+            corner_color += getColorLetter(getColor(FACE::RIGHT, 0, 0));
+            break;
+
+//            UFL
+        case 1:
+            corner_color += getColorLetter(getColor(FACE::UP, 2, 0));
+            corner_color += getColorLetter(getColor(FACE::FRONT, 0, 0));
+            corner_color += getColorLetter(getColor(FACE::LEFT, 0, 2));
+            break;
+
+//            UBL
+        case 2:
+            corner_color += getColorLetter(getColor(FACE::UP, 0, 0));
+            corner_color += getColorLetter(getColor(FACE::BACK, 0, 2));
+            corner_color += getColorLetter(getColor(FACE::LEFT, 0, 0));
+            break;
+
+//            UBR
+        case 3:
+            corner_color += getColorLetter(getColor(FACE::UP, 0, 2));
+            corner_color += getColorLetter(getColor(FACE::BACK, 0, 0));
+            corner_color += getColorLetter(getColor(FACE::RIGHT, 0, 2));
+            break;
+
+//            DFR
+        case 4:
+            corner_color += getColorLetter(getColor(FACE::DOWN, 0, 2));
+            corner_color += getColorLetter(getColor(FACE::FRONT, 2, 2));
+            corner_color += getColorLetter(getColor(FACE::RIGHT, 2, 0));
+            break;
+
+//            DFL
+        case 5:
+            corner_color += getColorLetter(getColor(FACE::DOWN, 0, 0));
+            corner_color += getColorLetter(getColor(FACE::FRONT, 2, 0));
+            corner_color += getColorLetter(getColor(FACE::LEFT, 2, 2));
+            break;
+
+//            DBR
+        case 6:
+            corner_color += getColorLetter(getColor(FACE::DOWN, 2, 2));
+            corner_color += getColorLetter(getColor(FACE::BACK, 2, 0));
+            corner_color += getColorLetter(getColor(FACE::RIGHT, 2, 2));
+            break;
+
+//            DBL
+        case 7:
+            corner_color += getColorLetter(getColor(FACE::DOWN, 2, 0));
+            corner_color += getColorLetter(getColor(FACE::BACK, 2, 2));
+            corner_color += getColorLetter(getColor(FACE::LEFT, 2, 0));
+            break;
+    }
+    return corner_color;
+}
+
+uint8_t Generic_Rubiks_Cube::getCornerIndex(const uint8_t index) const {
+    string corner = getCornerColorString(index);
+
+    uint8_t ret = 0;
+    for (auto c: corner) {
+        if (c != 'W' && c != 'Y') continue;
+        if (c == 'Y') {
+            ret |= (1 << 2);
+        }
+    }
+
+    for (auto c: corner) {
+        if (c != 'R' && c != 'O') continue;
+        if (c == 'O') {
+            ret |= (1 << 1);
+        }
+    }
+
+    for (auto c: corner) {
+        if (c != 'B' && c != 'G') continue;
+        if (c == 'G') {
+            ret |= (1 << 0);
+        }
+    }
+    return ret;
+}
+
+uint8_t Generic_Rubiks_Cube::getCornerOrientation(const uint8_t index) const {
+    string corner = getCornerColorString(index);
+
+    string actual_str = "";
+
+    for (auto c: corner) {
+        if (c != 'W' && c != 'Y') continue;
+        actual_str.push_back(c);
+    }
+
+    if (corner[1] == actual_str[0]) {
+        return 1;
+    } else if (corner[2] == actual_str[0]) {
+        return 2;
+    } else return 0;
+}
+
+// uint8_t Generic_Rubiks_Cube::getCornerIndex(const uint8_t index) const {
+//
+//     string corner_color = getCornerColorString(index);
+//     uint8_t value = 0;
+//
+//     for (auto c: corner_color) {
+//
+//         if (c == 'Y') value |= (1 << 2);
+//
+//         if (c == 'O') value |= (1 << 1);
+//
+//         if (c == 'G') value |= (1 << 0);
+//
+//     }
+//
+//     if (value > 7) throw std::runtime_error("Invalid invert corner in cube. Input corner string: " + corner_color);
+//
+//     return value;
+//
+// }
+//
+//
+// uint8_t Generic_Rubiks_Cube::getCornerOrientation(const uint8_t index) const {
+//     string corner_color = getCornerColorString(index);
+//
+//     for (unsigned i = 0; i < 3; i++) {
+//         if (corner_color[i] == 'Y' || corner_color[i] == 'W' ) return (i);
+//     }
+//     throw std::runtime_error("Invalid invert corner in cube. Input corner string: " + corner_color);
+//
+// }
